@@ -1,5 +1,6 @@
 import java.util.*;
 
+/** Implementations of the Assignment 4 algorithms. docs/guide/CONTRACTS.md defines each field and limit. */
 public final class Algorithms {
     private static Map<String, Object> result() { return new LinkedHashMap<>(); }
 
@@ -9,6 +10,7 @@ public final class Algorithms {
         return r;
     }
 
+    /** LCS: dp[i][j] = LCS length of a[0..i) and b[0..j). */
     static Map<String, Object> lcs(Map<String, Object> input) {
         String a = (String) input.get("a"), b = (String) input.get("b");
         int n = a.length(), m = b.length();
@@ -40,6 +42,7 @@ public final class Algorithms {
         plan.add(Arrays.asList((long) l, (long) k, (long) r));
     }
 
+    /** Interval DP: dp[l][r] = min over k of dp[l][k] + dp[k+1][r] + sum(l..r). */
     static Map<String, Object> merge(Map<String, Object> input) {
         List<?> sz = (List<?>) input.get("sizes");
         int n = sz.size();
@@ -74,7 +77,8 @@ public final class Algorithms {
         res.put("plan", plan);
         return res;
     }
-    
+
+    /** Tree DP with take/skip, iterative (BFS order processed in reverse). */
     static Map<String, Object> tree(Map<String, Object> input) {
         int n = ((Number) input.get("n")).intValue();
         Map<String, Object> res = result();
@@ -132,6 +136,7 @@ public final class Algorithms {
         return res;
     }
 
+    /** Naive search: try every start. */
     static Map<String, Object> naive(Map<String, Object> input) {
         String t = (String) input.get("text"), p = (String) input.get("pattern");
         int n = t.length(), m = p.length();
@@ -203,6 +208,7 @@ public final class Algorithms {
         return r;
     }
 
+    /** Suffix array by prefix doubling (radix sort of rank pairs) plus Kasai LCP. */
     static Map<String, Object> suffix(Map<String, Object> input) {
         String s = (String) input.get("text");
         int n = s.length();
@@ -264,7 +270,7 @@ public final class Algorithms {
         return res;
     }
 
-    /** Aho Corasick with flat 95 symbol goto table and reverse failure count propagation. */
+    /** Aho-Corasick with flat 95-symbol goto table and reverse-failure count propagation. */
     static Map<String, Object> aho(Map<String, Object> input) {
         List<?> pats = (List<?>) input.get("patterns");
         List<?> texts = (List<?>) input.get("texts");
